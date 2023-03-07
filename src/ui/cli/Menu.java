@@ -1,5 +1,7 @@
 package ui.cli;
 
+import java.awt.*;
+
 public class Menu implements IConsoleInterface {
 	private String title;
 
@@ -26,7 +28,7 @@ public class Menu implements IConsoleInterface {
 		System.out.flush();
 		error = "";
 		System.out.printf("%s:\n\n", title);
-		for (int i = 0; i < options.length; i++)
+		/*for (int i = 0; i < options.length; i++)
 		{
 			System.out.printf("%d. %s\n", i+1, options[i].getText());
 		}
@@ -46,9 +48,16 @@ public class Menu implements IConsoleInterface {
 			error = "Answer must be in range!";
 			return;
 		}
-		options[answer-1].execute();
-		if (clear) console.cls();
-		if (exitAfterFinish) console.popStack();
+		options[answer-1].execute();*/
+		ChoiceDialouge cd = new ChoiceDialouge(options, true, 2) {
+			@Override
+			public void late() {
+
+			}
+		};
+		cd.execute(console);
+		//if (clear) console.cls();
+		//if (exitAfterFinish) console.popStack();
 	}
 
 	public void disableClear()

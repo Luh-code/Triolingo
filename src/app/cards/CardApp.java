@@ -19,18 +19,23 @@ public class CardApp
 	public void init(int cardAmt, BitSet activeBoxes)
 	{
 		if(cardAmt > drawer.getCardAmt(activeBoxes)) throw new ArrayIndexOutOfBoundsException("Cannot pick more cards than available!");
-		int boxAmt = activeBoxes.stream().sum();
 		ArrayList<Integer> boxIndices = new ArrayList<>();
 		for (int i = activeBoxes.nextSetBit(0); i != -1; i = activeBoxes.nextSetBit(i + 1))
 		{
 			boxIndices.add(i);
 		}
+		int boxAmt = boxIndices.size();
 		Random rnd = new Random();
 		for (int i = 0; i < cardAmt; i++)
 		{
-			int boxIndex = boxIndices.get(rnd.nextInt(0, boxAmt));
+			int boxIndex = boxIndices.get(Math.abs(rnd.nextInt())%boxAmt);
 			Box b = drawer.getBox(boxIndex);
-			Card c = b.getCard(rnd.nextInt(0, b.getCardAmt()));
+			if (b.getCardAmt() <= 0)
+			{
+				i--;
+				continue;
+			}
+			Card c = b.getCard(Math.abs(rnd.nextInt())%b.getCardAmt());
 			c.setBox(b);
 			cards.add(c);
 			b.removeCard(c);
@@ -65,6 +70,16 @@ public class CardApp
 	public AnswerQuality checkAnswer(String answer)
 	{
 		return (answer.equals(getTranslation()) ? AnswerQuality.CORRECT : (answer.equalsIgnoreCase(getTranslation()) ? AnswerQuality.CASE_ERROR : AnswerQuality.WRONG));
+	}
+
+	public int cardsLeft()
+	{
+		return cards.size();
+	}
+
+	public Card getCurrentCard()
+	{
+		return cards.get(0);
 	}
 }
 
