@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="Triolingo:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/Triolingo_jar</output-path>
+    <root id="archive" name="Triolingo.jar">
+      <element id="module-output" name="Triolingo" />
+    </root>
+  </artifact>
+</component>
