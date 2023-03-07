@@ -25,11 +25,17 @@ public class CardMenu extends Menu {
 				public void execute() {
 					ResourceManager rm = console.getResourceManager();
 					CardApp ca = rm.getResource("CardApp", CardApp.class);
+
+					BitSet activeBoxes = new BitSet();
+					activeBoxes.set(0, 4, true);
+					rm.getResource("CardApp", CardApp.class).init(rm.getResource("CardAmount", Integer.class), activeBoxes);
+
 					while (ca.cardsLeft() > 0)
 					{
-						CardInterface ci = new CardInterface(ca.getCurrentCard(), false);
+						CardInterface ci = new CardInterface(ca.useCard(), false);
 						ci.execute(console);
 					}
+					ca.sortCardsInBoxes();
 				}
 			},
 			new Option("Back") {
@@ -42,8 +48,8 @@ public class CardMenu extends Menu {
 		ResourceManager rm = console.getResourceManager();
 		if (rm.getResourceArray(CardApp.class) == null) rm.registerResourceType(CardApp.class);
 		if (rm.getResource("CardApp", CardApp.class) == null) rm.setResource("CardApp", new CardApp(phdm.getTestDrawer()));
-		BitSet activeBoxes = new BitSet();
-		activeBoxes.set(0, 4, true);
-		rm.getResource("CardApp", CardApp.class).init(10, activeBoxes);
+
+		if (rm.getResourceArray(Integer.class) == null) rm.registerResourceType(Integer.class);
+		if (rm.getResource("CardAmount", Integer.class) == null) rm.setResource("CardAmount", 10);
 	}
 }

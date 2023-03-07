@@ -13,8 +13,17 @@ public abstract class ChoiceDialouge implements IConsoleInterface {
         this.extraClearingLines = extraClearingLines;
     }
 
+    final public void disableClear()
+    {
+        clear = false;
+    }
+
     @Override
     final public void execute(Console console) {
+        System.out.printf("\033[1;31;49m%s\033[1;39;49m\n", error);
+        System.out.flush();
+        error = "";
+        early();
         for (int i = 0; i < options.length; i++)
         {
             System.out.printf("%d. %s\n", i+1, options[i].getText());
@@ -28,11 +37,13 @@ public abstract class ChoiceDialouge implements IConsoleInterface {
         } catch (NumberFormatException e)
         {
             error = "Answer must only contain numbers!";
+            if (clear) clearSc(extraClearingLines);
             return;
         }
         if (answer < 1 || answer > options.length)
         {
             error = "Answer must be in range!";
+            if (clear) clearSc(extraClearingLines);
             return;
         }
         options[answer-1].execute();
@@ -43,12 +54,19 @@ public abstract class ChoiceDialouge implements IConsoleInterface {
     public void clearSc(int extra)
     {
         int lineAmt = options.length+3+extra;
-        String movement = String.format("\033[%dA\033[#E", lineAmt);
-        System.out.printf("%s\003[0J", movement);
+        String movement = String.format("\033[%dA\033[#E\033[0J", lineAmt);
+        System.out.print(movement);
         System.out.flush();
     }
 
-    public
+    final public String getError() {
+        return error;
+    }
+
+    public void early()
+    {
+
+    }
 
     public abstract void late();
 }

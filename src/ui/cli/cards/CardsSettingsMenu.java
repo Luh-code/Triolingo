@@ -1,5 +1,6 @@
 package ui.cli.cards;
 
+import data.ResourceManager;
 import ui.cli.*;
 
 public class CardsSettingsMenu extends Menu {
@@ -8,14 +9,17 @@ public class CardsSettingsMenu extends Menu {
 			new Option("Card Amount") {
 				@Override
 				public void execute() {
-					console.pushStack(e -> new DisplayWidget(e, String.format("The value of test is: %d", e.test)));
-					//System.out.println(console.test);
+					((Menu)console.peek()).disableClear();
+					ResourceManager rm = console.getResourceManager();
+					console.pushStack(e -> new DisplayWidget(e, String.format("The amount of cards to be learnt at a time is set to: %d", rm.getResource("CardAmount", Integer.class))));
 				}
 			},
 			new Option("Change Card Amount") {
 				@Override
 				public void execute() {
-					console.pushStack(e -> ManipulatorWidget.integerManipulatorGenerator(e, "Please enter the amount of Cards per training session", f -> {e.test = f;}));
+					((Menu)console.peek()).disableClear();
+					ResourceManager rm = console.getResourceManager();
+					console.pushStack(e -> ManipulatorWidget.integerManipulatorGenerator(e, "Please enter the amount of Cards per training session", f -> rm.setResource("CardAmount", f)));
 				}
 			},
 			new Option("Back") {

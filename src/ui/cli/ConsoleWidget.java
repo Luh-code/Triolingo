@@ -18,16 +18,17 @@ public abstract class ConsoleWidget implements IConsoleInterface {
 	{
 		long linesRequired = prompt.chars()
 			.filter(ch -> ch == '\n')
-			.count()+1;
-		String movement = String.format("\033[%dA\033[#E", linesRequired);
-		System.out.printf("%s\033[0J%s", movement, "");
+			.count()+3;
+		String movement = String.format("\033[%dA\033[0E\033[0J", linesRequired);
+		System.out.print(movement);
+		System.out.flush();
 	}
 
 	@Override
 	final public void execute(Console console) {
 		killAfterUse = true;
-		prompt = String.format("\033[1;31;49m%s\033[1;39;49m%s%s", error, (error.length() != 0 ? "\n" : ""), prompt);
 		makeRoom();
+		prompt = String.format("\033[1;31;49m%s\033[1;39;49m%s\n%s", error, (error.length() != 0 ? "\n" : ""), prompt);
 		System.out.flush();
 		System.out.printf("\033[48;5;235m%s", prompt);
 		System.out.flush();

@@ -9,7 +9,7 @@ public class CardApp
 	private ArrayList<Card> cards = new ArrayList<>();
 	private ArrayList<Card> learnt = new ArrayList<>();
 
-	private Card currentCard;
+	private int usedCards = 0;
 
 	public CardApp(Drawer drawer)
 	{
@@ -72,14 +72,32 @@ public class CardApp
 		return (answer.equals(getTranslation()) ? AnswerQuality.CORRECT : (answer.equalsIgnoreCase(getTranslation()) ? AnswerQuality.CASE_ERROR : AnswerQuality.WRONG));
 	}
 
+	public void sortCardsInBoxes()
+	{
+		for (Card c : learnt)
+		{
+			c.getBox().moveCardUp(c);
+		}
+		for (Card c : cards)
+		{
+			c.getBox().moveCardDown(c);
+		}
+	}
+
 	public int cardsLeft()
 	{
-		return cards.size();
+		return cards.size() + learnt.size() - usedCards;
 	}
 
 	public Card getCurrentCard()
 	{
 		return cards.get(0);
+	}
+
+	public Card useCard()
+	{
+		usedCards++;
+		return getCurrentCard();
 	}
 }
 

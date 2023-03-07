@@ -50,9 +50,9 @@ public class CardInterface implements IConsoleInterface {
 
 			}
 		};
-		do cd.execute(console) while(cd.);
+		do { cd.execute(console); } while(!cd.getError().equals(""));
 
-		console.cls();
+		Console.cls();
 		if (killAfterUse) console.popStack();
 	}
 }
