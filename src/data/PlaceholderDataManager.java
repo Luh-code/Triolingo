@@ -1,9 +1,5 @@
 package data;
 
-import app.cards.Box;
-import app.cards.Card;
-import app.cards.Drawer;
-
 public class PlaceholderDataManager {
 	private Drawer testDrawer;
 

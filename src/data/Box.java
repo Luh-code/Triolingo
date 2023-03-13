@@ -1,7 +1,6 @@
-package app.cards;
+package data;
 
 import java.util.ArrayList;
-import java.util.Collections;
 
 public class Box {
 	private ArrayList<Card> cards = new ArrayList<>();

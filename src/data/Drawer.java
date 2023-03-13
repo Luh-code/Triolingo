@@ -1,4 +1,4 @@
-package app.cards;
+package data;
 
 import java.util.BitSet;
 

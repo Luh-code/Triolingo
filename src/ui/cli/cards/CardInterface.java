@@ -1,11 +1,9 @@
 package ui.cli.cards;
 
-import app.cards.Card;
+import data.Card;
 import app.cards.CardApp;
 import data.ResourceManager;
 import ui.cli.*;
-
-import java.awt.*;
 
 public class CardInterface implements IConsoleInterface {
 

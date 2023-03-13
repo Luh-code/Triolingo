@@ -1,4 +1,4 @@
-package app.cards;
+package data;
 
 public class Card {
 	private String word;
